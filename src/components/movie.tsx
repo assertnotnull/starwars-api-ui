@@ -31,6 +31,7 @@ export default function Movie({
             {data.starships.map((shipUrl) => {
               return (
                 <button
+                  key={getId(shipUrl)}
                   onClick={() => {
                     setSelectedShipId(getId(shipUrl));
                   }}
