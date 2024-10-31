@@ -1,3 +1,7 @@
+export type Brand<U extends string | number, T> = U & { __brand: T };
+
+export type BrandId = Brand<string, "id">;
+
 export type Movie = {
   title: string;
   episode_id: number;
@@ -7,7 +11,7 @@ export type Movie = {
   release_date: Date;
   characters: string[];
   planets: string[];
-  starships: string[];
+  starships: Brand<string, "url">[];
   vehicles: string[];
   species: string[];
   created: Date;
@@ -16,7 +20,7 @@ export type Movie = {
 };
 
 export type Starship = {
-  name: string;
+  name: Brand<string, "name">;
   model: string;
   manufacturer: string;
   cost_in_credits: string;
@@ -33,5 +37,5 @@ export type Starship = {
   films: string[];
   created: Date;
   edited: Date;
-  url: string;
+  url: Brand<string, "url">;
 };

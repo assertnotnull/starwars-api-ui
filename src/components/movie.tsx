@@ -1,11 +1,12 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchStarShip } from "../hooks/fetchFuncs";
 import useMovie from "../hooks/useMovie";
+import { Brand, BrandId, Starship } from "../hooks/types";
 
 export default function Movie({
-  setSelectedShip,
+  setSelectedShipId,
 }: {
-  setSelectedShip: (url: string) => void;
+  setSelectedShipId: (id: BrandId) => void;
 }) {
   const queryClient = useQueryClient();
   const { data, isError, isLoading } = useMovie();
@@ -15,8 +16,8 @@ export default function Movie({
       queryFn: fetchStarShip,
     });
 
-  function getId(url: string) {
-    return url.substring(32, url.length - 1);
+  function getId(url: Starship["url"]): Brand<string, "id"> {
+    return url.substring(32, url.length - 1) as Brand<string, "id">;
   }
 
   return (
@@ -27,11 +28,11 @@ export default function Movie({
           <h2>{data.title}</h2>
           <p>{data.opening_crawl}</p>
           <ul>
-            {data.starships.map((shipUrl: string) => {
+            {data.starships.map((shipUrl) => {
               return (
                 <button
                   onClick={() => {
-                    setSelectedShip(getId(shipUrl));
+                    setSelectedShipId(getId(shipUrl));
                   }}
                   onMouseDown={() => prefetch(getId(shipUrl))}
                 >
